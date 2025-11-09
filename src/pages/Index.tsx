@@ -144,15 +144,17 @@ const Index = () => {
   };
 
   const renderNavigation = () => (
-    <nav className="bg-white border-b shadow-sm sticky top-0 z-50">
+    <nav className="bg-card border-b border-border backdrop-blur-sm sticky top-0 z-50 shadow-xl">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <Icon name="Cpu" size={28} className="text-primary" />
-            <h1 className="text-2xl font-bold">Техно Комп</h1>
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-primary to-amber-400 p-2 rounded-lg">
+              <Icon name="Cpu" size={28} className="text-background" />
+            </div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">Техно Комп</h1>
           </div>
           
-          <div className="hidden md:flex gap-6">
+          <div className="hidden md:flex gap-2">
             {[
               { id: 'home', label: 'Главная', icon: 'Home' },
               { id: 'catalog', label: 'Каталог', icon: 'Package' },
@@ -162,22 +164,22 @@ const Index = () => {
               <button
                 key={item.id}
                 onClick={() => setCurrentPage(item.id as any)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
-                  currentPage === item.id ? 'bg-primary text-white' : 'hover:bg-secondary'
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-300 ${
+                  currentPage === item.id ? 'bg-gradient-to-r from-primary to-amber-400 text-background shadow-lg shadow-primary/50' : 'hover:bg-secondary/50 text-muted-foreground hover:text-foreground'
                 }`}
               >
                 <Icon name={item.icon as any} size={18} />
-                {item.label}
+                <span className="font-medium">{item.label}</span>
               </button>
             ))}
           </div>
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" className="relative">
+              <Button className="relative bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300 shadow-lg shadow-primary/30">
                 <Icon name="ShoppingCart" size={20} />
                 {cart.length > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+                  <Badge className="absolute -top-2 -right-2 h-6 w-6 flex items-center justify-center p-0 bg-red-500 text-white border-2 border-background">
                     {cart.length}
                   </Badge>
                 )}
@@ -196,28 +198,35 @@ const Index = () => {
   );
 
   const renderHome = () => (
-    <div className="space-y-12">
-      <section className="relative bg-gradient-to-r from-primary to-blue-600 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold mb-4">Техно Комп</h2>
-          <p className="text-xl mb-8">Современная техника для вашего комфорта</p>
-          <Button size="lg" variant="secondary" onClick={() => setCurrentPage('catalog')}>
+    <div className="space-y-16">
+      <section className="relative bg-gradient-to-br from-amber-900 via-amber-700 to-yellow-600 text-white py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yIDItNCA0LTRzNCwyIDQgNHYyYzAgMi0yIDQtNCA0cy00LTItNC00di0yem0wLTMwVjBjMC0yIDItNCA0LTRzNCwyIDQgNHY0YzAgMi0yIDQtNCA0cy00LTItNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="inline-block bg-gradient-to-br from-primary to-amber-400 p-4 rounded-2xl mb-6 shadow-2xl shadow-primary/50">
+            <Icon name="Cpu" size={64} className="text-background" />
+          </div>
+          <h2 className="text-6xl font-bold mb-6 drop-shadow-2xl">Техно Комп</h2>
+          <p className="text-2xl mb-10 text-amber-100 max-w-2xl mx-auto">Премиальная техника для тех, кто ценит качество и стиль</p>
+          <Button size="lg" className="bg-white text-amber-900 hover:bg-amber-100 shadow-2xl shadow-black/30 px-8 py-6 text-lg" onClick={() => setCurrentPage('catalog')}>
             Перейти в каталог
-            <Icon name="ArrowRight" size={20} className="ml-2" />
+            <Icon name="ArrowRight" size={24} className="ml-2" />
           </Button>
         </div>
       </section>
 
-      <section className="container mx-auto px-4">
-        <h3 className="text-3xl font-bold text-center mb-8">Популярные товары</h3>
-        <div className="grid md:grid-cols-3 gap-6">
+      <section className="container mx-auto px-4 pb-16">
+        <h3 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">Популярные товары</h3>
+        <div className="grid md:grid-cols-3 gap-8">
           {products.slice(0, 3).map(product => (
-            <Card key={product.id} className="p-6 hover:shadow-lg transition-shadow">
-              <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-lg mb-4" />
-              <Badge className="mb-2">{product.category}</Badge>
-              <h4 className="font-semibold text-lg mb-2">{product.name}</h4>
-              <p className="text-2xl font-bold text-primary mb-4">{product.price.toLocaleString('ru-RU')} ₽</p>
-              <Button onClick={() => addToCart(product)} className="w-full">
+            <Card key={product.id} className="p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 bg-gradient-to-br from-card to-secondary border-border hover:scale-105 group">
+              <div className="relative overflow-hidden rounded-xl mb-4">
+                <img src={product.image} alt={product.name} className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <Badge className="mb-3 bg-gradient-to-r from-primary to-amber-400 text-background border-0">{product.category}</Badge>
+              <h4 className="font-semibold text-xl mb-3">{product.name}</h4>
+              <p className="text-3xl font-bold bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent mb-5">{product.price.toLocaleString('ru-RU')} ₽</p>
+              <Button onClick={() => addToCart(product)} className="w-full bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300 shadow-lg shadow-primary/30">
                 <Icon name="ShoppingCart" size={18} className="mr-2" />
                 В корзину
               </Button>
@@ -229,12 +238,12 @@ const Index = () => {
   );
 
   const renderCatalog = () => (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold">Каталог товаров</h2>
+    <div className="container mx-auto px-4 py-12">
+      <div className="flex justify-between items-center mb-12">
+        <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">Каталог товаров</h2>
         <Dialog open={isAddProductOpen} onOpenChange={setIsAddProductOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300 shadow-lg shadow-primary/30">
               <Icon name="Plus" size={18} className="mr-2" />
               Добавить товар
             </Button>
@@ -281,7 +290,7 @@ const Index = () => {
                   placeholder="/placeholder.svg"
                 />
               </div>
-              <Button onClick={handleAddProduct} className="w-full">
+              <Button onClick={handleAddProduct} className="w-full bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300">
                 Добавить товар
               </Button>
             </div>
@@ -296,24 +305,24 @@ const Index = () => {
           <p className="text-sm text-muted-foreground mt-2">Добавьте первый товар в каталог</p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
           {products.map(product => (
-            <Card key={product.id} className="p-6 hover:shadow-lg transition-shadow group">
-              <div className="relative">
-                <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-lg mb-4" />
+            <Card key={product.id} className="p-6 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 bg-gradient-to-br from-card to-secondary border-border hover:scale-105 group">
+              <div className="relative overflow-hidden rounded-xl">
+                <img src={product.image} alt={product.name} className="w-full h-48 object-cover mb-4 group-hover:scale-110 transition-transform duration-500" />
                 <Button
                   size="sm"
                   variant="destructive"
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all shadow-lg"
                   onClick={() => handleDeleteProduct(product.id)}
                 >
                   <Icon name="Trash2" size={16} />
                 </Button>
               </div>
-              <Badge className="mb-2">{product.category}</Badge>
+              <Badge className="mb-3 bg-gradient-to-r from-primary to-amber-400 text-background border-0">{product.category}</Badge>
               <h4 className="font-semibold text-lg mb-2">{product.name}</h4>
-              <p className="text-2xl font-bold text-primary mb-4">{product.price.toLocaleString('ru-RU')} ₽</p>
-              <Button onClick={() => addToCart(product)} className="w-full">
+              <p className="text-2xl font-bold bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent mb-4">{product.price.toLocaleString('ru-RU')} ₽</p>
+              <Button onClick={() => addToCart(product)} className="w-full bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300 shadow-lg shadow-primary/30">
                 <Icon name="ShoppingCart" size={18} className="mr-2" />
                 В корзину
               </Button>
@@ -361,7 +370,7 @@ const Index = () => {
               <span className="text-lg font-semibold">Итого:</span>
               <span className="text-2xl font-bold text-primary">{getTotalPrice().toLocaleString('ru-RU')} ₽</span>
             </div>
-            <Button className="w-full" size="lg">
+            <Button className="w-full bg-gradient-to-r from-primary to-amber-400 hover:from-amber-400 hover:to-primary transition-all duration-300 shadow-lg shadow-primary/30" size="lg">
               Оформить заказ
             </Button>
           </div>
@@ -494,9 +503,15 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {renderNavigation()}
       <main>{renderContent()}</main>
-      <footer className="bg-secondary mt-12 py-8 border-t">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2024 Техно Комп. Все права защищены.</p>
+      <footer className="bg-gradient-to-r from-amber-900 to-amber-800 mt-16 py-10 border-t border-primary/30">
+        <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="bg-gradient-to-br from-primary to-amber-400 p-2 rounded-lg">
+              <Icon name="Cpu" size={24} className="text-background" />
+            </div>
+            <span className="text-xl font-bold text-primary">Техно Комп</span>
+          </div>
+          <p className="text-amber-200">© 2024 Техно Комп. Все права защищены.</p>
         </div>
       </footer>
     </div>
